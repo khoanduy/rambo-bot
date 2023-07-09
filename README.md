@@ -1,41 +1,45 @@
-# rambo-bot
+# Rambo bot
 My Discord bot, its name is Rambo
 
 ## Requirements
-In able to run project, make sure `node 18.16.0` or above is installed.
+In able to compile and run project, make sure `go 1.20` or above is installed.
 
 Clone repository by `git clone` to your local computer:
 ```shell script
-$ git clone git@github.com:samothrakii/rambo-bot.git
+$ git clone git@github.com:khoaji/rambo-bot.git
 $ cd rambo-bot
 ```
 
-You need to add these following values to `config.json` file (recommended) or you can use `.env` as an alternative
-```json
-{
-  "token": "<your_bot_token>",
-  "appId": "<your_bot_application_id>",
-  "guildId": "<your_guild_id>",
-  "channelId": "<your_target_channel_id>",
-  "devChannelId": "<your_development_channel_id>",
-  "voiceChannelId": "<your_target_voice_channel_id>",
-  "voiceChannelLink": "<your_target_voice_channel_link>",
-  "virusTotalApiKey": "<virus_total_api_key>"
-}
+You need to add these following environment variables to `.env` (recommended) or `~/.profile` file
+```
+PORT=[server_port]
+TOKEN=[bot_token]
+MONGO_URI=[mongodb_uri]
+APP_ID=[application_id]
+GUILD_ID=[target_guild_id]
+CHANNEL_ID=[target_channel_id]
+DEV_CHANNEL_ID=[dev_channel_id]
+VOICE_CHANNEL_ID=[target_voice_channel_id]
+VOICE_CHANNEL_LINK=[target_voice_channel_link]
+VIRUS_TOTAL_API_KEY=[virus_total_api_key]
 ```
 
 ## Build and run
 Install all dependencies:
 ```shell script
-$ npm install
+$ go install
 ```
 Compile and run your bot locally:
 ```shell script
-$ npm start
+$ go run main.go
 ```
 
 ## Release
-TBA
+To build a single executable binary, simply run:
+```shell script
+$ go build -ldflags '-s -w' -o bin/rambo-bot
+$ ./bin/rambo-bot
+```
 
 ## References
-[discordjs](https://discordjs.guide)
+[discordgo](https://github.com/bwmarrin/discordgo)
