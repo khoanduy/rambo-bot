@@ -1,7 +1,6 @@
 package events
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -10,13 +9,13 @@ import (
 )
 
 func CreateGameNightEvent(s *discordgo.Session) *discordgo.GuildScheduledEvent {
-	startingTime := time.Now().Add(30 * time.Minute)
-	endingTime := startingTime.Add(3 * time.Hour)
+	start := time.Now().Add(30 * time.Minute)
+	end := start.Add(3 * time.Hour)
 	scheduledEvent, err := s.GuildScheduledEventCreate(config.Env.GuildId, &discordgo.GuildScheduledEventParams{
 		Name:               "Game Night Event",
 		Description:        "This event will start in 30 mins and last 3 hours",
-		ScheduledStartTime: &startingTime,
-		ScheduledEndTime:   &endingTime,
+		ScheduledStartTime: &start,
+		ScheduledEndTime:   &end,
 		EntityType:         discordgo.GuildScheduledEventEntityTypeVoice,
 		ChannelID:          config.Env.VoiceChanId,
 		PrivacyLevel:       discordgo.GuildScheduledEventPrivacyLevelGuildOnly,
@@ -29,7 +28,7 @@ func CreateGameNightEvent(s *discordgo.Session) *discordgo.GuildScheduledEvent {
 
 	s.ChannelMessageSend(config.Env.ChannelId, "Game Night event starts in 30 mins. Get ready @here.")
 
-	fmt.Println("Created scheduled event:", scheduledEvent.Name)
+	log.Println("Created scheduled event: ", scheduledEvent.Name)
 	return scheduledEvent
 }
 
@@ -41,10 +40,11 @@ func TransformGameNightToExternalEvent(s *discordgo.Session, event *discordgo.Gu
 			Location: config.Env.VoiceChanLink,
 		},
 	})
+
 	if err != nil {
 		log.Printf("Error during transformation of scheduled voice event into external event: %v", err)
 		return
 	}
 
-	fmt.Println("Transformed scheduled event:", scheduledEvent.Name)
+	log.Println("Transformed scheduled event: ", scheduledEvent.Name)
 }

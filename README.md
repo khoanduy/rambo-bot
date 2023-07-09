@@ -12,7 +12,6 @@ $ cd rambo-bot
 
 You need to add these following environment variables to `.env` (recommended) or `~/.profile` file
 ```
-PORT=[server_port]
 TOKEN=[bot_token]
 MONGO_URI=[mongodb_uri]
 APP_ID=[application_id]
