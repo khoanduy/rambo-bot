@@ -1,4 +1,4 @@
-module github.com/samothrakii/rambo-bot
+module github.com/khoaji/rambo-bot
 
 go 1.20
 

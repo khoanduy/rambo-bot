@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/samothrakii/rambo-bot/utils"
+	"github.com/khoaji/rambo-bot/utils"
 )
 
 func MessageReply(s *discordgo.Session, m *discordgo.MessageCreate) {
@@ -17,29 +17,26 @@ func MessageReply(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if isMsgUrl(m.Content) {
 		links := findUrlsInMsg(m.Content)
 
-		var safeLinks []string
-		var unsafeLinks []string
+		var safe []string
+		var unsafe []string
 		for _, link := range links {
-			unsafe, err := utils.CheckUnsafeLink(link)
-			if err != nil {
-				log.Println("Could not check link ", err)
+			if isSafe, err := utils.IsSafeLink(link); err != nil {
+				log.Println("Could not check link", err)
 				return
-			}
-
-			if unsafe {
-				unsafeLinks = append(unsafeLinks, link)
+			} else if isSafe {
+				safe = append(safe, link)
 			} else {
-				safeLinks = append(safeLinks, link)
+				unsafe = append(unsafe, link)
 			}
 		}
 
 		res := "Link(s) "
-		if len(safeLinks) > 0 {
+		if len(safe) > 0 {
 			res += "safe to click\n"
 		}
 
-		if len(unsafeLinks) > 0 {
-			res += strings.Join(unsafeLinks, ", ")
+		if len(unsafe) > 0 {
+			res += strings.Join(unsafe, ", ")
 			res += " NOT SAFE, watch out @here"
 		}
 

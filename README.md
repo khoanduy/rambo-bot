@@ -18,10 +18,10 @@ MONGO_URI=[mongodb_uri]
 APP_ID=[application_id]
 GUILD_ID=[target_guild_id]
 CHANNEL_ID=[target_channel_id]
-DEV_CHANNEL_ID=[dev_channel_id]
-VOICE_CHANNEL_ID=[target_voice_channel_id]
-VOICE_CHANNEL_LINK=[target_voice_channel_link]
-VIRUS_TOTAL_API_KEY=[virus_total_api_key]
+DEV_CHAN_ID=[dev_channel_id]
+VOICE_CHAN_ID=[target_voice_channel_id]
+VOICE_CHAN_LINK=[target_voice_channel_link]
+VT_API_KEY=[virus_total_api_key]
 ```
 
 ## Build and run

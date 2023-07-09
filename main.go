@@ -1,19 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/samothrakii/rambo-bot/conf"
-	"github.com/samothrakii/rambo-bot/core"
+	"github.com/khoaji/rambo-bot/config"
+	"github.com/khoaji/rambo-bot/core"
 )
 
 func main() {
-	conf.LoadConf()
+	config.LoadConf()
 
 	bot := core.BotInit()
 	bot.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
@@ -25,14 +24,14 @@ func main() {
 
 	err := bot.Open()
 	if err != nil {
-		fmt.Println("Error opening connection", err)
+		log.Fatal("Error opening connection", err)
 		return
 	}
 
 	gameNightEventCron := core.GameNightEventCron(bot)
 	gameNightEventCron.Start()
 
-	fmt.Println("Rambo is now running. Press CTRL-C to exit.")
+	log.Println("Rambo is now running. Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 	<-sc

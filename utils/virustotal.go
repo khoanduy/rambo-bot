@@ -2,17 +2,16 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"net/url"
 	"strings"
 
-	"github.com/samothrakii/rambo-bot/conf"
+	"github.com/khoaji/rambo-bot/config"
 )
 
-type VtUrlAnalysisResponse struct {
+type UrlAnalysisResp struct {
 	Data struct {
 		Attributes struct {
 			Stats struct {
@@ -26,93 +25,92 @@ type VtUrlAnalysisResponse struct {
 	} `json:"data"`
 }
 
-type VtScanUrlResponse struct {
+type ScanUrlResp struct {
 	Data struct {
 		Id string `json:"id"`
 	} `json:"data"`
 }
 
-func CheckUnsafeLink(link string) (bool, error) {
-	scanRes, err := vtScanUrl(link)
+const vtApiUrl string = "https://www.virustotal.com/api/v3"
+
+func IsSafeLink(link string) (bool, error) {
+	scanResp, err := postScanUrl(link)
 	if err != nil {
 		return true, err
 	}
 
-	analysisRes, err := getVtUrlAnalysis(scanRes.Data.Id)
+	resp, err := getUrlAnalysis(scanResp.Data.Id)
 	if err != nil {
 		return true, err
 	}
 
-	resText, _ := json.Marshal(analysisRes)
-	log.Printf("Check link %v, response: %v\n", link, string(resText))
-
-	if analysisRes.Data.Attributes.Stats.Malicious > 0 || analysisRes.Data.Attributes.Stats.Suspicious > 0 {
-		return true, nil
+	if report, err := json.Marshal(resp); err != nil {
+		log.Println(err)
+	} else {
+		log.Printf("Check link [%v], response: %v\n", link, string(report))
 	}
 
-	return false, nil
+	if resp.Data.Attributes.Stats.Malicious > 0 || resp.Data.Attributes.Stats.Suspicious > 0 {
+		return false, nil
+	}
+
+	return true, nil
 }
 
-func vtScanUrl(link string) (VtScanUrlResponse, error) {
-	var response VtScanUrlResponse
-	scanUrl := "https://www.virustotal.com/api/v3/urls"
-
+func postScanUrl(link string) (*ScanUrlResp, error) {
 	payload := strings.NewReader("url=" + url.QueryEscape(link))
-	req, err := http.NewRequest("POST", scanUrl, payload)
+	req, err := http.NewRequest("POST", vtApiUrl+"/urls", payload)
 	if err != nil {
-		return response, fmt.Errorf("Could not create new request %v", err)
+		return nil, err
 	}
 
 	req.Header.Add("accept", "application/json")
-	req.Header.Add("x-apikey", conf.BotConf.VirusTotalApiKey)
+	req.Header.Add("x-apikey", config.Env.VtApiKey)
 	req.Header.Add("content-type", "application/x-www-form-urlencoded")
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return response, fmt.Errorf("Request failed %v", err)
-	}
-
-	defer res.Body.Close()
-	body, _ := io.ReadAll(res.Body)
-	if err != nil {
-		return response, fmt.Errorf("Could not read response body %v", err)
-	}
-
-	err = json.Unmarshal(body, &response)
-	if err != nil {
-		return response, fmt.Errorf("Error parsing JSON: %v", err)
-	}
-
-	return response, nil
-}
-
-func getVtUrlAnalysis(id string) (VtUrlAnalysisResponse, error) {
-	var response VtUrlAnalysisResponse
-	analysesUrl := "https://www.virustotal.com/api/v3/analyses/" + id
-
-	req, err := http.NewRequest("GET", analysesUrl, nil)
-	if err != nil {
-		return response, fmt.Errorf("Could not create new request %v", err)
-	}
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("x-apikey", conf.BotConf.VirusTotalApiKey)
-
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return response, fmt.Errorf("Request failed %v", err)
+		return nil, err
 	}
 
 	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		return response, fmt.Errorf("Could not read response body %v", err)
+		return nil, err
 	}
 
-	err = json.Unmarshal(body, &response)
+	var resp *ScanUrlResp
+	if err = json.Unmarshal(body, &resp); err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
+func getUrlAnalysis(id string) (*UrlAnalysisResp, error) {
+	req, err := http.NewRequest("GET", vtApiUrl+"/analyses/"+id, nil)
 	if err != nil {
-		return response, fmt.Errorf("Error parsing JSON: %v", err)
+		return nil, err
 	}
 
-	return response, nil
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("x-apikey", config.Env.VtApiKey)
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var resp *UrlAnalysisResp
+	if err = json.Unmarshal(body, &resp); err != nil {
+		return nil, err
+	}
+
+	return resp, nil
 }

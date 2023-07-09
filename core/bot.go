@@ -1,19 +1,18 @@
 package core
 
 import (
-	"fmt"
 	"log"
 	"time"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/khoaji/rambo-bot/config"
+	"github.com/khoaji/rambo-bot/events"
+	"github.com/khoaji/rambo-bot/slash"
 	"github.com/robfig/cron/v3"
-	"github.com/samothrakii/rambo-bot/conf"
-	"github.com/samothrakii/rambo-bot/events"
-	"github.com/samothrakii/rambo-bot/slash"
 )
 
 func BotInit() *discordgo.Session {
-	bot, err := discordgo.New("Bot " + conf.BotConf.Token)
+	bot, err := discordgo.New("Bot " + config.Env.Token)
 	if err != nil {
 		log.Fatal("Error creating Discord session", err)
 	}
@@ -38,7 +37,7 @@ func RegisterSlashCommands(bot *discordgo.Session) []*discordgo.ApplicationComma
 
 	regdCmds := make([]*discordgo.ApplicationCommand, len(slash.Commands))
 	for i, v := range slash.Commands {
-		cmd, err := bot.ApplicationCommandCreate(conf.BotConf.AppId, conf.BotConf.GuildId, v)
+		cmd, err := bot.ApplicationCommandCreate(config.Env.AppId, config.Env.GuildId, v)
 		if err != nil {
 			log.Fatalf("Cannot create '%v' command: %v", v.Name, err)
 		}
@@ -52,7 +51,7 @@ func RemoveSlashCommands(bot *discordgo.Session, regdCmds []*discordgo.Applicati
 	log.Println("Removing commands...")
 
 	for _, v := range regdCmds {
-		err := bot.ApplicationCommandDelete(conf.BotConf.AppId, conf.BotConf.GuildId, v.ID)
+		err := bot.ApplicationCommandDelete(config.Env.AppId, config.Env.GuildId, v.ID)
 		if err != nil {
 			log.Fatalf("Cannot delete '%v' command: %v", v.Name, err)
 		}
@@ -60,15 +59,13 @@ func RemoveSlashCommands(bot *discordgo.Session, regdCmds []*discordgo.Applicati
 }
 
 func GameNightEventCron(bot *discordgo.Session) *cron.Cron {
-	fmt.Println("Start Game night event cron job")
+	log.Println("Start Game Night event cron job")
 	job := cron.New(cron.WithLocation(time.UTC))
 
-	_, err := job.AddFunc("30 13 * * *", func() {
+	if _, err := job.AddFunc("30 13 * * *", func() {
 		event := events.CreateGameNightEvent(bot)
 		events.TransformGameNightToExternalEvent(bot, event)
-	})
-
-	if err != nil {
+	}); err != nil {
 		log.Fatal("Error scheduling cron job", err)
 	}
 
