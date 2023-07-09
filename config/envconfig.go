@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type EnvConf struct {
+type EnvConfig struct {
 	Token         string
 	MongoUri      string
 	AppId         string
@@ -19,9 +19,9 @@ type EnvConf struct {
 	VtApiKey      string
 }
 
-var Env *EnvConf
+var Env *EnvConfig
 
-func LoadConf() {
+func LoadEnv() {
 	if Env != nil {
 		return
 	}
@@ -31,7 +31,7 @@ func LoadConf() {
 		log.Fatal("Error loading .env file", err)
 	}
 
-	Env = &EnvConf{
+	Env = &EnvConfig{
 		Token:         os.Getenv("TOKEN"),
 		MongoUri:      os.Getenv("MONGO_URI"),
 		AppId:         os.Getenv("APP_ID"),

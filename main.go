@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	config.LoadConf()
+	config.LoadEnv()
 
 	bot := core.BotInit()
 	bot.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
