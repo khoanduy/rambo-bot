@@ -1,1 +1,1 @@
-worker: ./bin/rambo-bot
+worker: rambo-bot

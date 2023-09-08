@@ -1,10 +1,9 @@
 package config
 
 import (
-	"log"
 	"os"
 
-	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type EnvConfig struct {
@@ -24,11 +23,6 @@ var Env *EnvConfig
 func LoadEnv() {
 	if Env != nil {
 		return
-	}
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file", err)
 	}
 
 	Env = &EnvConfig{

@@ -13,7 +13,7 @@ var CommandHandlers = map[string]func(s *discordgo.Session, i *discordgo.Interac
 		s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
-				Content: strings.Repeat(user.Mention()+" ", 50),
+				Content: strings.Repeat(user.Mention()+" ", 20),
 			},
 		})
 	},
