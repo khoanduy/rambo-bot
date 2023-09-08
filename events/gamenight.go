@@ -17,7 +17,7 @@ func CreateGameNightEvent(s *discordgo.Session) *discordgo.GuildScheduledEvent {
 		ScheduledStartTime: &start,
 		ScheduledEndTime:   &end,
 		EntityType:         discordgo.GuildScheduledEventEntityTypeVoice,
-		ChannelID:          config.Env.VoiceChanId,
+		ChannelID:          config.Env.VoiceChannelId,
 		PrivacyLevel:       discordgo.GuildScheduledEventPrivacyLevelGuildOnly,
 	})
 
@@ -37,7 +37,7 @@ func TransformGameNightToExternalEvent(s *discordgo.Session, event *discordgo.Gu
 		Name:       "Game Night @ Hamster Hill",
 		EntityType: discordgo.GuildScheduledEventEntityTypeExternal,
 		EntityMetadata: &discordgo.GuildScheduledEventEntityMetadata{
-			Location: config.Env.VoiceChanLink,
+			Location: config.Env.VoiceChannelLink,
 		},
 	})
 
