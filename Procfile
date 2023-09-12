@@ -1,1 +1,1 @@
-worker: rambo-bot
+worker: python main.py

@@ -2,7 +2,7 @@
 My Discord bot, its name is Rambo
 
 ## Requirements
-In able to compile and run project, make sure `go 1.20` or above is installed.
+In able to compile and run project, make sure `python 3.10` or above is installed.
 
 Clone repository by `git clone` to your local computer:
 ```shell script
@@ -24,21 +24,27 @@ VT_API_KEY=[virus_total_api_key]
 ```
 
 ## Build and run
-Install all dependencies:
+1. Create a new virtual environment and activate it
 ```shell script
-$ go install
+$ python -m venv .venv  # python3 in most cases
+$ source .venv/bin/activate
 ```
-Compile and run your bot locally:
+
+2. Install all dependencies, this only run once per virtualenv
 ```shell script
-$ go run main.go
+$ pip install -r requirements.txt
 ```
+You might want to run `pip sync` from now on.
+
+3. Compile and run your bot locally:
+```shell script
+$ python main.py
+```
+
+NOTE: Everytime you add a new direct dependency you must re-generate `requirements.txt` by executing `pip-compile` to avoid deployment failure.
 
 ## Release
-To build a single executable binary, simply run:
-```shell script
-$ go build -ldflags '-s -w' -o bin/rambo-bot
-$ ./bin/rambo-bot
-```
+Heroku
 
 ## References
-[discordgo](https://github.com/bwmarrin/discordgo)
+[discord.py](https://discordpy.readthedocs.io/en/stable/)

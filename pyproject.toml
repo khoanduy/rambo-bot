@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rambo-bot"
+version = "1.0.0"
+description = "My Discord bot, its name is Rambo"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = ["discord", "bot", "python"]
+authors = [
+  { name = "Khoa Nguyen", email = "mail@khoaji.dev" },
+]
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.in"] }
+
+[project.urls]
+Documentation = "https://github.com/khoaji/rambo-bot#readme"
+Issues = "https://github.com/khoaji/rambo-bot/issues"
+Source = "https://github.com/khoaji/rambo-bot"
+
+[tool.black]
+target-version = ["py310"]
+line-length = 120
+skip-string-normalization = true
