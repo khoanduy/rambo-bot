@@ -17,4 +17,3 @@ formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', 
 
 handler.setFormatter(formatter)
 LOGGER.addHandler(handler)
-
