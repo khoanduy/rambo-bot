@@ -3,3 +3,5 @@ pre-commit
 black
 ruff
 discord.py
+python-dotenv
+

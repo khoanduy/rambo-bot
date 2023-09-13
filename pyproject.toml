@@ -27,3 +27,4 @@ Source = "https://github.com/khoaji/rambo-bot"
 target-version = ["py310"]
 line-length = 120
 skip-string-normalization = true
+

@@ -34,9 +34,15 @@ $ source .venv/bin/activate
 ```shell script
 $ pip install -r requirements.txt
 ```
-You might want to run `pip sync` from now on.
 
-3. Compile and run your bot locally:
+You might want to run `pip sync` from now on
+
+3. Install `pre-commit` git hook scripts
+```shell script
+$ pre-commit install
+```
+
+4. Compile and run your bot locally
 ```shell script
 $ python main.py
 ```
@@ -48,3 +54,4 @@ Heroku
 
 ## References
 [discord.py](https://discordpy.readthedocs.io/en/stable/)
+
