@@ -6,7 +6,7 @@ In able to compile and run project, make sure `go 1.20` or above is installed.
 
 Clone repository by `git clone` to your local computer:
 ```shell script
-$ git clone git@github.com:khoaji/rambo-bot.git
+$ git clone git@github.com:khoarc/rambo-bot.git
 $ cd rambo-bot
 ```
 
