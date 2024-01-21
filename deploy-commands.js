@@ -1,16 +1,16 @@
-const { REST, Routes } = require('discord.js');
-const { appId, guildId, token } = require('./config.json');
-const fs = require('node:fs');
-const path = require('node:path');
-const logger = require('./utils/logger');
+import { REST, Routes } from 'discord.js';
+import { appId, guildId, token } from './config.json';
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import * as logger from './utils/logger';
 
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandsPath = join(__dirname, 'commands');
+const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-  const filePath = path.join(commandsPath, file);
+  const filePath = join(commandsPath, file);
   const command = require(filePath);
   // Set a new item in the Collection with the key as the command name and the value as the exported module
   if ('data' in command && 'execute' in command) {

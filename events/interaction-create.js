@@ -1,23 +1,21 @@
-const { Events } = require('discord.js');
-const logger = require('../utils/logger');
+import { Events } from 'discord.js';
+import * as logger from '../utils/logger';
 
-module.exports = {
-  name: Events.InteractionCreate,
-  async execute(interaction) {
+export const name = Events.InteractionCreate;
+export async function execute(interaction) {
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
 
     if (!command) {
-      logger.error(`No command matching ${interaction.commandName} was found.`);
-      return;
+        logger.error(`No command matching ${interaction.commandName} was found.`);
+        return;
     }
 
     try {
-      await command.execute(interaction);
+        await command.execute(interaction);
     } catch (error) {
-      logger.error(`Error executing ${interaction.commandName}`);
-      logger.error(error);
+        logger.error(`Error executing ${interaction.commandName}`);
+        logger.error(error);
     }
-  },
-};
+}

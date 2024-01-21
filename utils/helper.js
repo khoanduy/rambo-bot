@@ -1,5 +1,5 @@
-const { vtScanUrl, vtUrlAnalysis } = require('../utils/virus-total');
-const logger = require('../utils/logger');
+import { vtScanUrl, vtUrlAnalysis } from '../utils/virus-total';
+import * as logger from '../utils/logger';
 
 const extractUrlsFromString = (str) => {
   const regex = /https?:\/\/[^\s/$.?#].[^\s]*/gi;
@@ -15,7 +15,7 @@ const urlSafetyCheck = async (url) => {
   return !(stats.malicious > 0 || stats.suspicious > 0);
 };
 
-module.exports = {
+export default {
   extractUrlsFromString,
   urlSafetyCheck,
 };

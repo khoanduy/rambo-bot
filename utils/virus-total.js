@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { virusTotalApiKey } = require('../config.json');
+import { request } from 'axios';
+import { virusTotalApiKey } from '../config.json';
 
 const vtScanUrl = async (url) => {
   const { URLSearchParams } = require('url');
@@ -18,7 +18,7 @@ const vtScanUrl = async (url) => {
     data: encodedParams,
   };
 
-  const response = await axios.request(options);
+  const response = await request(options);
   return response.data;
 };
 
@@ -32,11 +32,11 @@ const vtUrlAnalysis = async (id) => {
     },
   };
 
-  const response = await axios.request(options);
+  const response = await request(options);
   return response.data;
 };
 
-module.exports = {
+export default {
   vtScanUrl,
   vtUrlAnalysis,
 };
