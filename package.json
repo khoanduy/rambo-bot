@@ -18,9 +18,9 @@
   "author": "Khoa Nguyen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/samothrakii/rambo-bot/issues"
+    "url": "https://github.com/khoanduy/rambo-bot/issues"
   },
-  "homepage": "https://github.com/samothrakii/rambo-bot#readme",
+  "homepage": "https://github.com/khoanduy/rambo-bot#readme",
   "dependencies": {
     "axios": "^1.4.0",
     "discord.js": "^14.11.0",
@@ -29,5 +29,6 @@
   },
   "devDependencies": {
     "eslint": "^8.44.0"
-  }
+  },
+  "type": "module"
 }
