@@ -42,7 +42,6 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-console.log(process.env.TOKEN);
 
 // Login to Discord
 client.login(process.env.TOKEN);
