@@ -2,15 +2,15 @@
 My Discord bot, its name is Rambo
 
 ## Requirements
-In able to run project, make sure `node 18.16.0` or above is installed.
+In able to run project, make sure `rustc 1.76.0` or above is installed.
 
 Clone repository by `git clone` to your local computer:
 ```shell script
-$ git clone git@github.com:samothrakii/rambo-bot.git
+$ git clone git@github.com:khoanduy/rambo-bot.git
 $ cd rambo-bot
 ```
 
-You need to add these following values to `.env` file (recommended) or you can use `config.json` as an alternative
+You need to add these following values to `.env` file
 ```
 TOKEN=<your_bot_token>
 APP_ID=<your_bot_application_id>
@@ -22,17 +22,17 @@ VOICE_CHANNEL_LINK=<your_target_voice_channel_link>
 ```
 
 ## Build and run
-Install all dependencies:
+Install all dependencies and build project
 ```shell script
-$ npm install
+$ cargo build
 ```
-Compile and run your bot locally:
+Run your bot locally
 ```shell script
-$ npm start
+$ cargo run
 ```
 
 ## Release
 TBA
 
 ## References
-[discordjs](https://discordjs.guide)
+[serenity](https://github.com/serenity-rs/serenity)
