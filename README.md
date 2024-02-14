@@ -10,15 +10,14 @@ $ git clone git@github.com:khoanduy/rambo-bot.git
 $ cd rambo-bot
 ```
 
-You need to add these following values to `.env` file
-```
-TOKEN=<your_bot_token>
-APP_ID=<your_bot_application_id>
-GUILD_ID=<your_target_guild_id>
-CHANNEL_ID=<your_target_channel_id>
-DEV_CHANNEL_ID=<your_development_channel_id>
-VOICE_CHANNEL_ID=<your_target_voice_channel_id>
-VOICE_CHANNEL_LINK=<your_target_voice_channel_link>
+You need to add these following values to `.cargo/config.toml` file
+```toml
+[env]
+TOKEN="your_bot_token"
+APP_ID="your_bot_application_id"
+GUILD_ID="your_target_guild_id"
+CHANNEL_ID="your_target_channel_id"
+DEV_CHANNEL_ID="your_target_development_channel_id"
 ```
 
 ## Build and run

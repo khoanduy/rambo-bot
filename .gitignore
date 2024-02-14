@@ -1,5 +1,8 @@
 # OSX
 .DS_Store
 
+# Per-project config
+.cargo/config.toml
+
 # Added by cargo
 /target
