@@ -34,7 +34,10 @@ $ pip install -r dev-requirements.txt
 $ python main.py
 ```
 
-**Notes**
+## Release
+TBA
+
+## Additional notes
 This project use `pip-tools` to manage dependencies, to install simply run the following command in your venv:
 ```shell script
 $ pip install pip-tools
@@ -51,9 +54,6 @@ $ pip-compile --extra dev -o dev-requirements.txt pyproject.toml
 ```
 
 Make sure those files are committed with your changes.
-
-## Release
-TBA
 
 ## References
 [Discord docs](https://discord.com/developers/docs)
