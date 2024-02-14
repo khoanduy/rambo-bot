@@ -2,7 +2,7 @@
 My Discord bot, its name is Rambo
 
 ## Requirements
-In able to run project, make sure `rustc 1.76.0` or above is installed.
+In able to run project, make sure `python 3.10` or above is installed.
 
 Clone repository by `git clone` to your local computer:
 ```shell script
@@ -10,9 +10,8 @@ $ git clone git@github.com:khoanduy/rambo-bot.git
 $ cd rambo-bot
 ```
 
-You need to add these following values to `.cargo/config.toml` file
-```toml
-[env]
+You need to add these following values to `.env` file
+```
 TOKEN="your_bot_token"
 APP_ID="your_bot_application_id"
 GUILD_ID="your_target_guild_id"
@@ -21,17 +20,40 @@ DEV_CHANNEL_ID="your_target_development_channel_id"
 ```
 
 ## Build and run
-Install all dependencies and build project
+1. Create new virtual environment and activate it:
 ```shell script
-$ cargo build
+$ python -m venv venv
+$ source venv/bin/activate
 ```
-Run your bot locally
+2. For development install all dependencies by executing:
 ```shell script
-$ cargo run
+$ pip install -r dev-requirements.txt
 ```
+3. Launch the bot:
+```shell script
+$ python main.py
+```
+
+**Notes**
+This project use `pip-tools` to manage dependencies, to install simply run the following command in your venv:
+```shell script
+$ pip install pip-tools
+```
+
+To update dependencies, just add them into `[project.dependencies]` section in `pyproject.toml` and run:
+```shell script
+$ pip-compile -o requirements.txt pyproject.toml
+```
+
+For development dependencies, update `[project.optional-dependencies.dev]` section instead and run:
+```shell script
+$ pip-compile --extra dev -o dev-requirements.txt pyproject.toml
+```
+
+Make sure those files are committed with your changes.
 
 ## Release
 TBA
 
 ## References
-[serenity](https://github.com/serenity-rs/serenity)
+[Discord docs](https://discord.com/developers/docs)
